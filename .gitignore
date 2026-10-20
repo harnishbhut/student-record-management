@@ -1,0 +1,30 @@
+# Byte-compiled Python files (don't need to track these in Git)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environment folder
+venv/
+env/
+.venv/
+
+# SQLite database file (generated automatically – no need to commit)
+students.db
+*.db
+
+# Pytest cache
+.pytest_cache/
+
+# IDE / editor config
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment variables (keep secrets out of Git)
+.env

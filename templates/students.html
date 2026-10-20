@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Student Records - Student Record Management System{% endblock %}
+
+{% block content %}
+<h2>Student Records</h2>
+<p>Below is the list of all currently registered students in the system.</p>
+
+<!-- Search and Filter Bar -->
+<form method="GET" action="{{ url_for('student_list') }}" class="filter-container">
+    <div class="form-group">
+        <label for="search-input">Search:</label>
+        <input 
+            type="text" 
+            id="search-input" 
+            name="search" 
+            placeholder="Search by Name or ID..." 
+            value="{{ search_query }}"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="course-filter">Filter by Course:</label>
+        <select id="course-filter" name="course">
+            <option value="">All Courses</option>
+            {% for course in courses %}
+                <option value="{{ course }}" {% if course_filter == course %}selected{% endif %}>
+                    {{ course }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    {% if search_query or course_filter %}
+        <a href="{{ url_for('student_list') }}" class="btn btn-secondary btn-sm">Clear Filters</a>
+    {% endif %}
+
+    <div style="margin-left: auto;">
+        <a href="{{ url_for('add_student_page') }}" class="btn btn-primary btn-sm">+ Register Student</a>
+    </div>
+</form>
+
+<div style="margin-bottom: 10px; font-size: 13px; color: #555555;">
+    <span id="result-count">Showing {{ students|length }} student record(s)</span>
+</div>
+
+<!-- Records Table -->
+<div class="table-wrapper">
+    <table class="records-table">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Student ID</th>
+                <th style="width: 25%;">Full Name</th>
+                <th style="width: 25%;">Email</th>
+                <th style="width: 20%;">Course</th>
+                <th style="width: 10%;">Year of Study</th>
+                <th style="width: 10%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="students-table-body">
+            {% for student in students %}
+                <tr>
+                    <td><strong>#{{ student.id }}</strong></td>
+                    <td>{{ student.full_name }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.course }}</td>
+                    <td>{{ student.year_of_study }}</td>
+                    <td class="actions-cell">
+                        <a href="{{ url_for('student_details', student_id=student.id) }}" class="btn btn-secondary btn-sm">View</a>
+                        <a href="{{ url_for('edit_student_page', student_id=student.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ url_for('delete_student_action', student_id=student.id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete('{{ student.full_name|replace('\'', '\\\'') }}', '{{ student.id }}');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Empty State Message -->
+<div id="empty-state" class="empty-message" style="display: {% if students|length == 0 %}block{% else %}none{% endif %};">
+    No student records found. 
+    {% if search_query or course_filter %}
+        Try clearing your search query or course filter.
+    {% else %}
+        Click "Register Student" above to add your first student record.
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}About - Student Record Management System{% endblock %}
+
+{% block content %}
+<h2>About Student Record Management System</h2>
+<p>
+    The <strong>Student Record Management System</strong> is an academic web application designed
+    to provide college faculty and department administrators with a reliable, streamlined tool
+    for tracking student admissions, academic progress, and enrollment information.
+</p>
+
+<div class="info-section">
+    <h3>Project Purpose & Objective</h3>
+    <p>
+        In many collegiate departments, tracking student information using paper ledgers or fragmented spreadsheets
+        leads to duplicate entries, data loss, and security risks. This system provides a unified, centralized
+        platform that performs complete CRUD (Create, Read, Update, Delete) operations with validation and SQL injection protection.
+    </p>
+</div>
+
+<div class="info-section">
+    <h3>Technology Stack</h3>
+    <ul class="feature-list">
+        <li><strong>Backend:</strong> Python 3 with the lightweight Flask web framework.</li>
+        <li><strong>Database:</strong> SQLite3 with parameterized SQL queries for persistent relational storage.</li>
+        <li><strong>Frontend:</strong> Semantic HTML5, structured CSS3 with a traditional academic design, and vanilla JavaScript.</li>
+        <li><strong>API Layer:</strong> RESTful JSON API supporting standard HTTP methods (GET, POST, PUT, DELETE) and status codes (200, 201, 400, 404, 409).</li>
+        <li><strong>Testing:</strong> Automated test suite utilizing Python's built-in <code>unittest</code> module with isolated test databases.</li>
+        <li><strong>Version Control:</strong> Git for clean tracking of commits and repository changes.</li>
+    </ul>
+</div>
+
+<div class="info-section">
+    <h3>REST API Endpoints</h3>
+    <p>External client applications and services can interact with the system via the following REST API endpoints:</p>
+    <div class="code-block">
+GET    /api/students       - Retrieve all students (supports ?search= and ?course=)<br>
+GET    /api/students/&lt;id&gt;  - Retrieve a single student by ID<br>
+POST   /api/students       - Register a new student (JSON body)<br>
+PUT    /api/students/&lt;id&gt;  - Update an existing student record (JSON body)<br>
+DELETE /api/students/&lt;id&gt;  - Delete a student record by ID
+    </div>
+</div>
+
+<div class="info-section">
+    <h3>Software Engineering Principles Demonstrated</h3>
+    <ul class="feature-list">
+        <li><strong>Separation of Concerns:</strong> Database access logic is isolated in <code>database.py</code>, route controllers in <code>app.py</code>, and UI presentation in templates and stylesheets.</li>
+        <li><strong>Data Integrity & Validation:</strong> Both client-side JavaScript and robust server-side Python validators protect against empty values, bad email formats, and duplicate records.</li>
+        <li><strong>Security:</strong> All SQL queries use parameterized bindings (<code>?</code> placeholders) to completely prevent SQL injection attacks.</li>
+        <li><strong>User Experience:</strong> Helpful error messages, confirmation dialogs for destructive actions, and responsive feedback.</li>
+    </ul>
+</div>
+{% endblock %}

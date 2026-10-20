@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Student Record Management System{% endblock %}
+
+{% block content %}
+<div class="welcome-panel">
+    <h2>Welcome to the Student Record Management System</h2>
+    <p>
+        This portal allows teachers and college administrators to manage basic student records
+        efficiently. You can view all enrolled students, register new admissions, search and filter records,
+        update academic status, and maintain student details.
+    </p>
+
+    <div class="button-row">
+        <a href="{{ url_for('student_list') }}" class="btn btn-primary">View Student Records</a>
+        <a href="{{ url_for('add_student_page') }}" class="btn btn-secondary">Register New Student</a>
+    </div>
+</div>
+
+<div class="info-section">
+    <h3>System Features</h3>
+    <ul class="feature-list">
+        <li><strong>Student Directory:</strong> View complete rosters of registered students with ID, full name, email, course, and year.</li>
+        <li><strong>Student Registration:</strong> Simple intake form to register new students with instant data validation.</li>
+        <li><strong>Search & Filter:</strong> Instantly look up students by their full name or unique Student ID, or filter by course.</li>
+        <li><strong>Profile Details:</strong> Inspect individual student academic profiles and admission dates.</li>
+        <li><strong>Edit Records:</strong> Update student information while safeguarding against duplicate email registrations.</li>
+        <li><strong>Secure Database:</strong> Powered by an SQLite database with parameterized SQL queries to prevent security vulnerabilities.</li>
+        <li><strong>RESTful API:</strong> Standard JSON endpoints for external integration and programmatic data access.</li>
+    </ul>
+</div>
+
+<div class="info-section">
+    <h3>Quick Navigation Tips</h3>
+    <p>
+        To get started right away, click on <strong><a href="{{ url_for('student_list') }}">Student Records</a></strong> in the top menu to view all existing students, or click <strong><a href="{{ url_for('add_student_page') }}">Add Student</a></strong> to create your first record.
+    </p>
+</div>
+{% endblock %}

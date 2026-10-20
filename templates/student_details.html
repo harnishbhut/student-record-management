@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if student %}
+        Student Details - {{ student.full_name }}
+    {% else %}
+        Student Not Found
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if student %}
+    <h2>Student Details: {{ student.full_name }}</h2>
+    <p>Complete academic record for student <strong>#{{ student.id }}</strong>.</p>
+
+    <div class="details-card">
+        <table class="details-table">
+            <tbody>
+                <tr>
+                    <th>Student ID</th>
+                    <td><strong>#{{ student.id }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{ student.full_name }}</td>
+                </tr>
+                <tr>
+                    <th>Email Address</th>
+                    <td><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{{ student.phone if student.phone else 'Not provided' }}</td>
+                </tr>
+                <tr>
+                    <th>Course Name</th>
+                    <td>{{ student.course }}</td>
+                </tr>
+                <tr>
+                    <th>Year of Study</th>
+                    <td>{{ student.year_of_study }}</td>
+                </tr>
+                <tr>
+                    <th>Date of Admission</th>
+                    <td>{{ student.admission_date }}</td>
+                </tr>
+                <tr>
+                    <th>Record Created</th>
+                    <td>{{ student.created_at }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="button-row">
+            <a href="{{ url_for('edit_student_page', student_id=student.id) }}" class="btn btn-primary">Edit Student</a>
+            <a href="{{ url_for('student_list') }}" class="btn btn-secondary">Back to Student Records</a>
+            <form action="{{ url_for('delete_student_action', student_id=student.id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete('{{ student.full_name|replace('\'', '\\\'') }}', '{{ student.id }}');">
+                <button type="submit" class="btn btn-danger">Delete Student</button>
+            </form>
+        </div>
+    </div>
+
+{% else %}
+    <h2>Student Not Found</h2>
+    <div class="alert alert-error">
+        The requested student record (ID: {% if student_id %}#{{ student_id }}{% else %}Unknown{% endif %}) could not be found in the database.
+    </div>
+    <p>The record may have been deleted or the ID may be invalid.</p>
+    <div class="button-row">
+        <a href="{{ url_for('student_list') }}" class="btn btn-primary">Return to Student Records</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Go to Home Page</a>
+    </div>
+{% endif %}
+{% endblock %}

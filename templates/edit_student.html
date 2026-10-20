@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student #{{ student.id }} - Student Record Management System{% endblock %}
+
+{% block content %}
+<h2>Edit Student Record (ID: #{{ student.id }})</h2>
+<p>Update the student's personal and academic details below.</p>
+
+<div class="form-card">
+    <form id="student-form" method="POST" action="{{ url_for('edit_student_page', student_id=student.id) }}" novalidate>
+        
+        <!-- Student ID (Not editable) -->
+        <div class="form-group">
+            <label for="student_id">Student ID:</label>
+            <input 
+                type="text" 
+                id="student_id" 
+                name="student_id_display" 
+                value="#{{ student.id }}" 
+                readonly 
+                disabled
+            >
+            <div class="field-help">Student ID cannot be changed.</div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <label for="full_name">Full Name:<span class="required-star">*</span></label>
+            <input 
+                type="text" 
+                id="full_name" 
+                name="full_name" 
+                value="{{ form_data.full_name }}" 
+                required
+            >
+            {% if errors.full_name %}
+                <div class="field-error">{{ errors.full_name }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+            <label for="email">Email Address:<span class="required-star">*</span></label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                value="{{ form_data.email }}" 
+                required
+            >
+            {% if errors.email %}
+                <div class="field-error">{{ errors.email }}</div>
+            {% endif %}
+            <div class="field-help">Must remain unique if modified.</div>
+        </div>
+
+        <!-- Phone Number (Optional) -->
+        <div class="form-group">
+            <label for="phone">Phone Number (Optional):</label>
+            <input 
+                type="text" 
+                id="phone" 
+                name="phone" 
+                value="{{ form_data.phone or '' }}"
+            >
+            {% if errors.phone %}
+                <div class="field-error">{{ errors.phone }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Course Name -->
+        <div class="form-group">
+            <label for="course">Course Name:<span class="required-star">*</span></label>
+            <input 
+                type="text" 
+                id="course" 
+                name="course" 
+                list="course-suggestions"
+                value="{{ form_data.course }}" 
+                required
+            >
+            <datalist id="course-suggestions">
+                {% for course in standard_courses %}
+                    <option value="{{ course }}">
+                {% endfor %}
+            </datalist>
+            {% if errors.course %}
+                <div class="field-error">{{ errors.course }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Year of Study -->
+        <div class="form-group">
+            <label for="year_of_study">Year of Study:<span class="required-star">*</span></label>
+            <select id="year_of_study" name="year_of_study" required>
+                <option value="">-- Select Academic Year --</option>
+                {% for year in valid_years %}
+                    <option value="{{ year }}" {% if form_data.year_of_study == year %}selected{% endif %}>
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+            {% if errors.year_of_study %}
+                <div class="field-error">{{ errors.year_of_study }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Date of Admission -->
+        <div class="form-group">
+            <label for="admission_date">Date of Admission:<span class="required-star">*</span></label>
+            <input 
+                type="date" 
+                id="admission_date" 
+                name="admission_date" 
+                value="{{ form_data.admission_date }}" 
+                required
+            >
+            {% if errors.admission_date %}
+                <div class="field-error">{{ errors.admission_date }}</div>
+            {% endif %}
+            <div class="field-help">Format: YYYY-MM-DD</div>
+        </div>
+
+        <!-- Form Action Buttons -->
+        <div class="button-row">
+            <button type="submit" class="btn btn-primary">Update Student Record</button>
+            <a href="{{ url_for('student_list') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
