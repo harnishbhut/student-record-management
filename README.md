@@ -1,4 +1,4 @@
-# Student Record Management System
+# Student Record Management System 
 
 A clean, traditional academic web application built with **Python**, **Flask**, **SQLite**, and vanilla **HTML, CSS, and JavaScript**. Designed for college administrators and teachers to register students, view records, search/filter admissions, update academic details, and manage student information.
 
